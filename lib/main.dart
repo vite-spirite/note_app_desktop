@@ -40,12 +40,24 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(width: 300.0,color: Theme.of(context).primaryColor, child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(16.0), children: const [ListTile(title: Text('barre de navigation'))],),),
-          const SizedBox(width: 16.0,),
-          const Text("page content"),
+          SingleChildScrollView(child: Container(width: 300.0, height: MediaQuery.of(context).size.height,color: Theme.of(context).primaryColor, child: ListView(shrinkWrap: true, padding: const EdgeInsets.all(16.0), children: [const ListTile(title: Text('barre de navigation')), ...fakeNav()],),),),
+          Container(padding: const EdgeInsets.all(16.0), child: const Text("page content")),
         ],
       ),
     );
   }
+}
+
+List<Widget> fakeNav() {
+  List<Widget> fake = [];
+
+  for (var i = 0; i < 50; i++) {
+    fake.add(
+      ListTile(title: Text('item $i'),)
+    );
+  }
+
+  return fake;
 }

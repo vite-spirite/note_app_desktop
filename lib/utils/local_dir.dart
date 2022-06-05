@@ -11,7 +11,12 @@ Future<String> getLocalPath() async {
   return dir.path;
 }
 
-Future<File> getStoreFile() async {
+Future<String> getNotesPath() async {
   final path = await getLocalPath();
+  return "$path/notes";
+}
+
+Future<File> getStoreFile() async {
+  final path = await getNotesPath();
   return File('$path/store.json');
 }
