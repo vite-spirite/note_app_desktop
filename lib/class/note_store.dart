@@ -23,10 +23,15 @@ class NoteRepository {
   Future<Note> create(String name) async {
     final localFile = await getNotesPath();
 
-    File file = File('$localFile/${DateTime.now()}-${name.replaceAll(' ', '-')}');
+    File file =
+        File('$localFile/${DateTime.now()}-${name.replaceAll(' ', '-')}');
     file = await file.create();
 
-    final tmp = Note(created: DateTime.now(), updated: DateTime.now(), name: name, path: file.path);
+    final tmp = Note(
+        created: DateTime.now(),
+        updated: DateTime.now(),
+        name: name,
+        path: file.path);
 
     notes.add(tmp);
     return tmp;
@@ -37,14 +42,13 @@ class NoteRepository {
       final ref = notes.firstWhere((element) => element.path == path);
       final index = notes.indexWhere((element) => element.path == path);
 
-      if(index == -1) {
+      if (index == -1) {
         throw "index not found";
       }
 
       await ref.delete();
       notes.removeAt(index);
-    }
-    catch(e) {
+    } catch (e) {
       return;
     }
   }
@@ -54,7 +58,7 @@ class NoteRepository {
 
     File file = File('$localPath/store.json');
 
-    if(!await file.exists()) {
+    if (!await file.exists()) {
       file = await file.create();
     }
 
@@ -63,8 +67,6 @@ class NoteRepository {
     for (var note in notes) {
       json.add(note.toJson());
     }
-
-    print(jsonEncode(json));
 
     file.writeAsStringSync(jsonEncode(json));
   }
