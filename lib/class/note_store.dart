@@ -34,6 +34,7 @@ class NoteRepository {
         path: file.path);
 
     notes.add(tmp);
+
     return tmp;
   }
 

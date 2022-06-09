@@ -9,24 +9,27 @@ class Note {
   bool loaded = false;
   String text = "";
 
-  Note({
-    required this.path,
-    required this.name,
-    required this.updated,
-    required this.created
-  });
+  Note(
+      {required this.path,
+      required this.name,
+      required this.updated,
+      required this.created});
 
-  Note.fromJson(dynamic data) : path = data['file'], name = data['name'], updated = DateTime.parse(data['updated']), created = DateTime.parse(data['created']);
+  Note.fromJson(dynamic data)
+      : path = data['file'],
+        name = data['name'],
+        updated = DateTime.parse(data['updated']),
+        created = DateTime.parse(data['created']);
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'file': path,
-    'updated': updated.toString(),
-    'created': created.toString()
-  };
+        'name': name,
+        'file': path,
+        'updated': updated.toString(),
+        'created': created.toString()
+      };
 
   Future<void> load() async {
-    if(loaded) {
+    if (loaded) {
       return;
     }
 
