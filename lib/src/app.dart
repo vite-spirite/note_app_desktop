@@ -19,11 +19,11 @@ class _MyLayoutState extends State<MyLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       // ignore: avoid_unnecessary_containers
-      body: Container(
+      body: SizedBox.expand(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [const Sidenav(), widget.body],
+          children: [const Sidenav(), Expanded(child: widget.body)],
         ),
       ),
       floatingActionButton: widget.fab,

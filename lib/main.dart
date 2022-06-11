@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:note_app_desktop/bloc/note_bloc.dart';
 import 'package:note_app_desktop/class/note_store.dart';
 import 'package:note_app_desktop/src/app.dart';
+import 'package:note_app_desktop/src/page/note_create.dart';
 import 'package:note_app_desktop/src/page/note_list.dart';
 import 'package:note_app_desktop/utils/initialize_file_system.dart';
 import 'package:window_size/window_size.dart';
@@ -59,11 +60,11 @@ class MyMaterialApp extends StatelessWidget {
         builder: (context, __) =>
             RepositoryProvider.of<NoteRepository>(context).notes.isNotEmpty
                 ? _build(child: NoteList())
-                : _build(child: const Text('Creation de document.')),
+                : _build(child: NoteCreate()),
       ),
       GoRoute(
         path: '/new',
-        builder: (_, __) => _build(child: const Text('Creation de document.')),
+        builder: (_, __) => _build(child: NoteCreate()),
       ),
       GoRoute(
           path: '/index/:id',

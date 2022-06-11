@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:note_app_desktop/bloc/note_bloc.dart';
 import 'package:note_app_desktop/src/components/navigation_item.dart';
 
 class Navigation extends StatelessWidget {
@@ -6,16 +9,31 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          NavigationItem(title: "Accueil"),
-          NavigationItem(title: "Accueil"),
-          NavigationItem(title: "Accueil"),
-        ],
+    return BlocBuilder<NoteBloc, NoteState>(
+      builder: (_, __) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ...listAllDocuments(context),
+            const Spacer(),
+            NavigationItem(
+              title: "+ Nouvelle note",
+              onPressed: () => context.go('/new'),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  List<Widget> listAllDocuments(BuildContext context) {
+    final bloc = BlocProvider.of<NoteBloc>(context);
+
+    List<Widget> items = bloc.repository.notes
+        .map<Widget>((e) => NavigationItem(title: e.name))
+        .toList();
+
+    return items;
   }
 }

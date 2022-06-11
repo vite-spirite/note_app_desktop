@@ -11,8 +11,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
   NoteBloc(this.repository) : super(NoteInactive()) {
     on<NoteCreateRequested>((event, emit) async {
+      emit(NoteLoading());
       final tmp = await repository.create(event.name);
       await tmp.update(event.text);
+      await repository.update();
+      emit(NoteInactive());
     });
   }
 }

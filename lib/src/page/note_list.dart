@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:note_app_desktop/bloc/note_bloc.dart';
 import 'package:note_app_desktop/class/note.dart';
 
@@ -14,7 +13,7 @@ class NoteList extends StatelessWidget {
     final NoteBloc bloc = BlocProvider.of<NoteBloc>(context);
     final List<Note> notes = bloc.repository.notes;
 
-    return Expanded(child: _buildNoteList(context, notes));
+    return _buildNoteList(context, notes);
   }
 
   Widget _buildNoteList(BuildContext context, List<Note> notes) {

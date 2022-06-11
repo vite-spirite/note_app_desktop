@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class NavigationItem extends StatelessWidget {
   final String title;
+  final VoidCallback? onPressed;
 
-  const NavigationItem({Key? key, required this.title}) : super(key: key);
+  const NavigationItem({Key? key, required this.title, this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed ?? () {},
       style: ElevatedButton.styleFrom(
         elevation: 0,
         primary: Colors.transparent,
