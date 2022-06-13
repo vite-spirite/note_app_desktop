@@ -1,13 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app_desktop/bloc/note_bloc.dart';
-import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as editor;
-import 'package:path_provider/path_provider.dart';
+import 'package:note_app_desktop/src/components/editor.dart';
 
 class NoteCreate extends StatelessWidget {
   final TextEditingController title = TextEditingController();
@@ -36,27 +33,10 @@ class NoteCreate extends StatelessWidget {
                 ),
               ),
             ),
-            editor.QuillToolbar.basic(
-              toolbarSectionSpacing: 0,
-              toolbarIconAlignment: WrapAlignment.start,
-              controller: _text,
-              locale: const Locale('fr'),
-              showAlignmentButtons: true,
-
-              //onImagePickCallback: _onImagePickCallback,
-              //filePickImpl: _pickFileImpl,
-            ),
             Expanded(
-              child: editor.QuillEditor(
-                controller: _text,
-                readOnly: false,
-                focusNode: FocusNode(),
-                scrollable: true,
-                scrollController: _scroll,
-                autoFocus: false,
-                padding: const EdgeInsets.all(8.0),
-                expands: true,
-                placeholder: "Écrivez une note...",
+              child: MyEditor(
+                quill: _text,
+                scroll: _scroll,
               ),
             ),
           ],
