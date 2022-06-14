@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter_quill/flutter_quill.dart';
 
 class Note {
   String path;
@@ -7,7 +10,9 @@ class Note {
   DateTime created;
 
   bool loaded = false;
-  String text = "";
+  Document text = Document();
+
+  Document get getText => text;
 
   Note(
       {required this.path,
@@ -34,7 +39,9 @@ class Note {
     }
 
     final file = File(path);
-    text = await file.readAsString();
+    final json = await file.readAsString();
+
+    text = Document.fromJson(jsonDecode(json));
 
     loaded = false;
     return;
@@ -52,12 +59,11 @@ class Note {
     await file.delete();
   }
 
-  Future<void> update(String text) async {
+  Future<void> update() async {
     final file = File(path);
 
     updated = DateTime.now();
-
-    await file.writeAsString(text);
+    await file.writeAsString(jsonEncode(text.toDelta().toJson()));
     return;
   }
 }

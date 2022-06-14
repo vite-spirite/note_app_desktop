@@ -9,8 +9,9 @@ abstract class NoteEvent extends Equatable {
 
 class NoteUpdateRequested extends NoteEvent {
   final Note note;
+  final int index;
 
-  const NoteUpdateRequested(this.note);
+  const NoteUpdateRequested(this.note, this.index);
 
   @override
   List<Object> get props => [];

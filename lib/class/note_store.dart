@@ -71,4 +71,10 @@ class NoteRepository {
 
     file.writeAsStringSync(jsonEncode(json));
   }
+
+  Future<void> loadAllContent() async {
+    for (var note in notes) {
+      await note.load();
+    }
+  }
 }

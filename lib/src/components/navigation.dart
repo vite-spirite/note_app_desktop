@@ -29,10 +29,14 @@ class Navigation extends StatelessWidget {
 
   List<Widget> listAllDocuments(BuildContext context) {
     final bloc = BlocProvider.of<NoteBloc>(context);
+    final notes = bloc.repository.notes;
 
-    List<Widget> items = bloc.repository.notes
-        .map<Widget>((e) => NavigationItem(title: e.name))
-        .toList();
+    List<Widget> items = [];
+
+    for (int i = 0; i < notes.length; i++) {
+      items.add(NavigationItem(
+          title: notes[i].name, onPressed: () => context.go('/index/$i')));
+    }
 
     return items;
   }

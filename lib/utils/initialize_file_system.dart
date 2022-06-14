@@ -22,13 +22,13 @@ Future<NoteRepository> initializeApp() async {
 
   NoteRepository repo = NoteRepository([]);
 
-  print(json);
-
   if (json.isEmpty) {
     await repo.update();
   } else {
     repo = NoteRepository.fromJson(json);
   }
+
+  await repo.loadAllContent();
 
   return repo;
 }
