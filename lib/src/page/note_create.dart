@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:note_app_desktop/bloc/note_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -51,9 +52,12 @@ class NoteCreate extends StatelessWidget {
                   disabledElevation: 0,
                   isExtended: true,
                   onPressed: () => createNote(context),
-                  icon: const Icon(Icons.save),
-                  label: const Text('Sauvegarder'),
+                  icon: const Icon(Icons.add),
+                  label: const Text('Créer'),
                 );
+              } else if (state is NoteCreated) {
+                context.go('/index/${state.index}');
+                return Container();
               } else {
                 return const FloatingActionButton(
                     disabledElevation: 0,
@@ -91,7 +95,7 @@ class NoteCreate extends StatelessWidget {
   }*/
 
   void createNote(BuildContext context) {
-    return BlocProvider.of<NoteBloc>(context).add(NoteCreateRequested(
+    BlocProvider.of<NoteBloc>(context).add(NoteCreateRequested(
         title.text, jsonEncode(_text.document.toDelta().toJson())));
   }
 }

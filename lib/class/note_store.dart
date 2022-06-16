@@ -23,8 +23,7 @@ class NoteRepository {
   Future<Note> create(String name) async {
     final localFile = await getNotesPath();
 
-    File file =
-        File('$localFile/${DateTime.now()}-${name.replaceAll(' ', '-')}');
+    File file = File('$localFile/${DateTime.now()}-$name'.replaceAll(' ', '-'));
     file = await file.create();
 
     final tmp = Note(

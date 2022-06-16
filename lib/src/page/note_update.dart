@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart' as editor;
 import 'package:note_app_desktop/bloc/note_bloc.dart';
 import 'package:note_app_desktop/src/components/editor.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../class/note.dart';
 
@@ -71,13 +72,54 @@ class _NoteUpdateState extends State<NoteUpdate> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                style: const TextStyle(fontSize: 24.0),
-                controller: title,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Titre:',
-                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      style: const TextStyle(fontSize: 24.0),
+                      controller: title,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Titre:',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  TextButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Supprimer une note ?'),
+                        content: const Text(
+                            'Voulez vous vraiment supprimer cette note ?\n Cette action est irréversible.'),
+                        actions: [
+                          TextButton(
+                            child: const Text('Annuler'),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                          ),
+                          TextButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0, onPrimary: Colors.red),
+                            child: const Text('Supprimer'),
+                            onPressed: () {
+                              //Navigator.pop(context, true);
+                              BlocProvider.of<NoteBloc>(context)
+                                  .add(NoteDestroyRequested(widget.note));
+                              context.go('/');
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0, onPrimary: Colors.red),
+                    child: const Text('Supprimer'),
+                  ),
+                ],
               ),
             ),
             Expanded(

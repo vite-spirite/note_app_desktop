@@ -22,6 +22,8 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
       await tmp.update();
       await repository.update();
+
+      emit(NoteCreated(repository.notes.length - 1));
       emit(NoteInactive());
     });
 
@@ -32,6 +34,13 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
       repository.notes[event.index] = event.note;
       await repository.update();
 
+      emit(NoteInactive());
+    });
+
+    on<NoteDestroyRequested>((event, emit) async {
+      emit(NoteLoading());
+      await repository.delete(event.note.path);
+      await repository.update();
       emit(NoteInactive());
     });
   }
