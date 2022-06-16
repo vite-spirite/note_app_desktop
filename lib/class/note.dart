@@ -14,6 +14,11 @@ class Note {
 
   Document get getText => text;
 
+  String get createdUTCDate =>
+      '${created.day}/${created.month}/${created.year}';
+  String get updatedUTCDate =>
+      '${updated.day}/${updated.month}/${updated.year}';
+
   Note(
       {required this.path,
       required this.name,
